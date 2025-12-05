@@ -3,7 +3,7 @@ import CountdownTimer from '@components/CountdownTimer/CountdownTimer';
 import Button from '@components/Button/Button';
 const CountdownBanner = () => {
     const { container, containerTimer, title, boxBtn } = styles;
-    const targetDate = '2026-12-31T23:59:59'; // Example target date
+    const targetDate = '2026-01-01T23:59:59'; // Example target date
     return (
         <div className={container}>
             <div className={containerTimer}>

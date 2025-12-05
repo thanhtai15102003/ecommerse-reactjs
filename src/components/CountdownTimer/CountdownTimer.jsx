@@ -37,12 +37,12 @@ const CountdownTimer = ({ targetDate }) => {
     Object.keys(timeLeft).forEach((interval) => {
         if (timeLeft[interval] !== undefined) {
             timerComponents.push(
-                <span  key={interval} className={box}>
-                    {formatNumber(timeLeft[interval])} <span className={title}>{interval}</span> {' '}
+                <span key={interval} className={box}>
+                    {formatNumber(timeLeft[interval])} <span className={title}>{interval}</span>{' '}
                 </span>
             );
         }
     });
-    return timerComponents
+    return timerComponents;
 };
 export default CountdownTimer;
