@@ -3,23 +3,30 @@ import routers from '@/routers/router';
 import { Suspense } from 'react';
 import { SideBarProvider } from '@/contexts/SideBarProvider';
 import SideBar from '@components/SideBar/SideBar';
+import { ToastProvider } from '@/contexts/ToastProvider';
 
 function App() {
     return (
-        <SideBarProvider>
-            <SideBar />
-            <BrowserRouter>
-                <Suspense fallback={<div>Loading...</div>}>
-                    <Routes>
-                        {routers.map((item, index) => {
-                            return (
-                                <Route path={item.path} element={<item.conponent />} key={index} />
-                            );
-                        })}
-                    </Routes>
-                </Suspense>
-            </BrowserRouter>
-        </SideBarProvider>
+        <ToastProvider>
+            <SideBarProvider>
+                <SideBar />
+                <BrowserRouter>
+                    <Suspense fallback={<div>Loading...</div>}>
+                        <Routes>
+                            {routers.map((item, index) => {
+                                return (
+                                    <Route
+                                        path={item.path}
+                                        element={<item.conponent />}
+                                        key={index}
+                                    />
+                                );
+                            })}
+                        </Routes>
+                    </Suspense>
+                </BrowserRouter>
+            </SideBarProvider>
+        </ToastProvider>
     );
 }
 
