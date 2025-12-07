@@ -2,17 +2,20 @@ import HeaderSideBar from '@components/ContentSideBar/components/HeaderSideBar/H
 import { TfiReload } from 'react-icons/tfi';
 import styles from './styles.module.scss';
 import ItemProduct from '../components/ItemProduct/ItemProduct';
-
+import Button from '@components/Button/Button';
 
 const Compare = () => {
-  const { container } = styles;
-  return (
-      <div className={container}>
-      <HeaderSideBar icon={<TfiReload style={{ fontSize: '30px' }} />} title="COMPARE" />
-      <ItemProduct />
-      </div>
-  );
-}
+    const { container } = styles;
+    return (
+        <div className={container}>
+            <div>
+                <HeaderSideBar icon={<TfiReload style={{ fontSize: '30px' }} />} title="COMPARE" />
+                <ItemProduct />
+            </div>
 
-export default Compare
+            <Button content={'  VIEW COMPARE  '} />
+        </div>
+    );
+};
 
+export default Compare;
