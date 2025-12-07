@@ -1,14 +1,40 @@
-import React from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import BoxIcon from './BoxIcon/BoxIcon';
 import { dataBoxIcon, dataMenu } from './constants';
 import styles from './styles.module.scss';
 import Menu from './Menu/Menu';
 import Logo from '@icons/images/Logo-retina.webp';
+import useScrollHandling from '@/hooks/useScrollHandling';
+import classNames from 'classnames';
+import { SideBarContext } from '../../contexts/SideBarProvider';
 
 const Header = () => {
-    const { containerBoxIcon, containerMenu, containerHeader, containerBox, container } = styles;
+    const {
+        containerBoxIcon,
+        containerMenu,
+        containerHeader,
+        containerBox,
+        container,
+        fixedHeader,
+        topHeader
+    } = styles;
+    const { scrollPosition } = useScrollHandling();
+    const [fixedPosition, setFixedPosition] = useState(false);
+    const { isOpen, setIsOpen } = useContext(SideBarContext);
+
+    console.log(isOpen);
+
+    useEffect(() => {
+        // Update fixedPosition based on scrollPosition
+        setFixedPosition(scrollPosition > 80);
+    }, [scrollPosition]);
     return (
-        <div className={container}>
+        <div
+            className={classNames(container, {
+                [topHeader]: !fixedPosition,
+                [fixedHeader]: fixedPosition
+            })}
+        >
             <div className={containerHeader}>
                 <div className={containerBox}>
                     <div className={containerBoxIcon}>
@@ -28,7 +54,13 @@ const Header = () => {
                 <div className={containerBox}>
                     <div className={containerMenu}>
                         {dataMenu.slice(3, dataMenu.length).map((item) => {
-                            return <Menu content={item.content} href={item.href} />;
+                            return (
+                                <Menu
+                                    content={item.content}
+                                    href={item.href}
+                                    setIsOpen={setIsOpen}
+                                />
+                            );
                         })}
                     </div>
                     <div className={containerBoxIcon}>

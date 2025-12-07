@@ -1,15 +1,25 @@
-import { useEffect } from 'react';
-import HomePage from '@components/HomePage/HomePage';
-import getProduct from '@/apis/productService';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import routers from '@/routers/router';
+import { Suspense } from 'react';
+import { SideBarProvider } from '@/contexts/SideBarProvider';
+import SideBar from '@components/SideBar/SideBar';
 
 function App() {
-    useEffect(() => {
-        getProduct();
-    }, []);
     return (
-        <>
-            <HomePage />
-        </>
+        <SideBarProvider>
+            <SideBar />
+            <BrowserRouter>
+                <Suspense fallback={<div>Loading...</div>}>
+                    <Routes>
+                        {routers.map((item, index) => {
+                            return (
+                                <Route path={item.path} element={<item.conponent />} key={index} />
+                            );
+                        })}
+                    </Routes>
+                </Suspense>
+            </BrowserRouter>
+        </SideBarProvider>
     );
 }
 

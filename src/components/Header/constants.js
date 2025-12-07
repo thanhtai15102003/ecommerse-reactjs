@@ -13,7 +13,7 @@ const dataMenu = [
     {content: 'About us', href: '#'},
     {content: 'Contact', href: '#'},
     {content: 'Search', href: '#'},
-    {content: 'Sigin in', href: '#'},
+    {content: 'Sign in', href: '#'},
 ]
 
 export { dataBoxIcon, dataMenu }
