@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, use } from 'react';
 import BoxIcon from './BoxIcon/BoxIcon';
 import { dataBoxIcon, dataMenu } from './constants';
 import styles from './styles.module.scss';
@@ -7,6 +7,9 @@ import Logo from '@icons/images/Logo-retina.webp';
 import useScrollHandling from '@/hooks/useScrollHandling';
 import classNames from 'classnames';
 import { SideBarContext } from '../../contexts/SideBarProvider';
+import { TfiReload } from 'react-icons/tfi';
+import { CiHeart } from 'react-icons/ci';
+import { CiShoppingCart } from 'react-icons/ci';
 
 const Header = () => {
     const {
@@ -20,9 +23,12 @@ const Header = () => {
     } = styles;
     const { scrollPosition } = useScrollHandling();
     const [fixedPosition, setFixedPosition] = useState(false);
-    const { isOpen, setIsOpen } = useContext(SideBarContext);
+    const { setIsOpen, setType } = useContext(SideBarContext);
 
-    console.log(isOpen);
+    const handleOpenSidebar = (type) => {
+        setIsOpen(true);
+        setType(type);
+    };
 
     useEffect(() => {
         // Update fixedPosition based on scrollPosition
@@ -64,9 +70,24 @@ const Header = () => {
                         })}
                     </div>
                     <div className={containerBoxIcon}>
-                        {dataBoxIcon.slice(3, dataBoxIcon.length).map((item) => {
-                            return <BoxIcon type={item.type} href={item.href} />;
-                        })}
+                        <TfiReload
+                            style={{
+                                fontSize: '20px'
+                            }}
+                            onClick={() => handleOpenSidebar('compare')}
+                        />
+                        <CiHeart
+                            style={{
+                                fontSize: '30px'
+                            }}
+                            onClick={() => handleOpenSidebar('wishlist')}
+                        />
+                        <CiShoppingCart
+                            style={{
+                                fontSize: '25px'
+                            }}
+                            onClick={() => handleOpenSidebar('cart')}
+                        />
                     </div>
                 </div>
             </div>
