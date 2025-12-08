@@ -3,16 +3,20 @@ import InputCommon from '@components/InputCommon/InputCommon';
 import Button from '@components/Button/Button';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { useContext, useEffect, useState } from 'react';
-import { ToastContext } from '../../../contexts/ToastProvider';
-import { register, signIn, getInfo } from '@/apis/authService';
+import { useContext, useState } from 'react';
+import { ToastContext } from '@/contexts/ToastProvider';
+import { register, signIn } from '@/apis/authService';
 import Cookies from 'js-cookie';
+import { SideBarContext } from '@/contexts/SideBarProvider';
+import { StoreContext } from '@/contexts/StoreProvider';
 
 const Login = () => {
     const { container, title, boxRememberMe, lostPw } = styles;
     const [isRegiter, setIsRegiter] = useState(false);
     const { toast } = useContext(ToastContext);
     const [isLoading, setIsLoading] = useState(false);
+    const { setIsOpen } = useContext(SideBarContext);
+    const { setUserId } = useContext(StoreContext);
 
     const formik = useFormik({
         initialValues: {
@@ -45,14 +49,21 @@ const Login = () => {
                 await signIn({ username, password })
                     .then((res) => {
                         setIsLoading(false);
-
                         const { id, token, refreshToken } = res.data;
-
+                        setUserId(id);
+                        Cookies.set('userId', id);
                         Cookies.set('token', token);
                         Cookies.set('refreshToken', refreshToken);
+                        toast.success('Sign in successfully');
+                        setIsOpen(false);
                     })
-                    .catch((err) => {});
-                setIsLoading(false);
+                    .catch((err) => {
+                        setIsLoading(false);
+                        toast.error('Sign in failed');
+                    });
+
+                
+               
             }
         }
     });
@@ -61,10 +72,6 @@ const Login = () => {
         setIsRegiter(!isRegiter);
         formik.resetForm();
     };
-
-    useEffect(() => {
-        getInfo();
-    }, []);
 
     return (
         <div className={container}>
