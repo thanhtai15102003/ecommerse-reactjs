@@ -6,4 +6,7 @@ const getProduct = async () => {
     return res.data;
 };
 
+
+
 export default getProduct;
+
