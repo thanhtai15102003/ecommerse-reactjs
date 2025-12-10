@@ -14,7 +14,11 @@ export default defineConfig({
             // eslint-disable-next-line no-undef
             '@styles': path.resolve(__dirname, 'src/assets/styles'),
             // eslint-disable-next-line no-undef
-            '@icons': path.resolve(__dirname, 'src/assets/icons')
+            '@icons': path.resolve(__dirname, 'src/assets/icons'),
+            // eslint-disable-next-line no-undef
+            '@pages': path.resolve(__dirname, 'src/pages'),
+            // eslint-disable-next-line no-undef
+            '@contexts': path.resolve(__dirname, 'src/contexts')
         }
     }
 });
