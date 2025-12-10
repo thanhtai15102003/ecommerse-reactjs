@@ -29,4 +29,26 @@
             background-color: rgba(255, 255, 255, 0.5);
         }
     }
+    .boxEmpty {
+        font-size: 14px;
+        color: $four_color;
+        text-align: center;
+        margin-top: 30px;
+
+        .boxBtnEmpty {
+            width: 162px;
+            margin: 20px auto;
+        }
+    }
+
+    .containerListItem {
+        @include flex_box_custom(space-between, unset, 0px);
+
+        flex-grow: 1;
+        flex-direction: column;
+    }
+}
+
+.isEmpty {
+    justify-content: unset;
 }
