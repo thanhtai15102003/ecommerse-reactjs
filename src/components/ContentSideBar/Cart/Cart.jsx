@@ -37,6 +37,11 @@ const Cart = () => {
         return acc + item.total;
     }, 0);
 
+    const handleNavigateToCart = () => {
+        navigate('/cart');
+        setIsOpen(false);
+    }
+
     return (
         <div className={classNames(container, { [isEmpty]: !listProductCart.length })}>
             <HeaderSideBar icon={<PiShoppingCart style={{ fontSize: '30px' }} />} title="CART" />
@@ -73,7 +78,7 @@ const Cart = () => {
                         </div>
 
                         <div className={boxBtn}>
-                            <Button content={'  VIEW CART  '} />
+                            <Button content={'  VIEW CART  '} onClick={handleNavigateToCart} />
                             <Button content={'  CHECKOUT  '} isPrimary={false} />
                         </div>
                     </div>
