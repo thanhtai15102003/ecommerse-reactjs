@@ -64,18 +64,20 @@
     .boxLeft {
         @include flex_box_custom(center, center, 20px);
     }
-    .selectBox {
-        border: 1px solid #e1e1e1;
-        padding: 5px;
-        color: $secondary_color;
-    }
 
     .selectBox.sort {
         width: 275px;
     }
-    .selectBox.show {
-        width: 83px;
-    }
+}
+
+.selectBox {
+    border: 1px solid #e1e1e1;
+    padding: 5px;
+    color: $secondary_color;
+}
+
+.selectBox.show {
+    width: 83px;
 }
 
 .containerProduct {

@@ -1,0 +1,97 @@
+@import '@styles/variables.module.scss';
+@import '@styles/mixin.module.scss';
+
+.container {
+    padding: 20px;
+    min-height: 0; /* allow flex parent to control height */
+    height: 100vh; /* full viewport height */
+    box-sizing: border-box; /* include padding in height calculation */
+    overflow-y: auto; /* enable vertical scroll when content exceeds viewport */
+    padding-right: 8px; /* avoid content hiding behind scrollbar */
+    -webkit-overflow-scrolling: touch; /* smooth scrolling on mobile */
+
+    .title {
+        font-size: 24px;
+        color: $four_color;
+        margin-top: 20px;
+    }
+    .price {
+        font-size: 20px;
+        color: $secondary_color;
+        margin: 10px 0;
+    }
+
+    .des {
+        color: $thr_color;
+    }
+    .label {
+        margin: 10px 0px;
+        color: $thr_color;
+    }
+    .boxSize {
+        @include flex_box_custom(flex-start, center, 0px);
+
+        .size {
+            padding: 3px 9px;
+            border: 1px solid #e1e1e1;
+            font-size: 17px;
+            cursor: pointer;
+        }
+
+        .isActive {
+            border: 1px solid $primary_color;
+        }
+    }
+
+    .boxAddToCart {
+        @include flex_box_custom(flex-start, center, 0px);
+        margin-top: 20px;
+
+        select {
+            width: 65px;
+            height: 36px;
+        }
+        button {
+            width: 190px;
+        }
+    }
+
+    .boxOr {
+        @include flex_box_custom(center, center, 10px);
+
+        font-size: 12px;
+        color: $thr_color;
+        margin-top: 15px;
+        margin-bottom: 15px;
+
+        .line {
+            width: 100%;
+            height: 1px;
+            background-color: #e1e1e1;
+            flex-grow: 1;
+        }
+    }
+    .boxOther {
+        @include flex_box_custom(flex-start, center, 10px);
+
+        margin-top: 12px;
+        color: $four_color;
+        cursor: pointer;
+    }
+
+    .boxFooter {
+        @include flex_box_custom(center, center, 10px);
+
+        margin-top: 12px;
+        span {
+            color: $secondary_color;
+        }
+    }
+
+    .shareIcons {
+        display: inline-flex;
+        gap: 5px; /* khoảng cách giữa các icon */
+        margin-left: 8px; /* giữ khoảng cách giữa chữ 'Share:' và dãy icon */
+        align-items: center;
+    }
+}

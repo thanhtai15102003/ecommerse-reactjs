@@ -18,7 +18,7 @@ const ProductItem = ({ src, prevSrc, name, price, details, isHomepage = true }) 
     const ourShopStore = useContext(OurShopContext);
     const isShowGrid = isHomepage || ourShopStore?.isShowGrid;
     const userId = Cookies.get('userId');
-    const { setIsOpen, setType, handleGetListProductCart } = useContext(SideBarContext);
+    const { setIsOpen, setType, handleGetListProductCart, setDetailProduct } = useContext(SideBarContext);
     const { toast } = useContext(ToastContext);
     const [isLoading, setIsLoading] = useState(false);
 
@@ -86,6 +86,12 @@ const ProductItem = ({ src, prevSrc, name, price, details, isHomepage = true }) 
             });
     };
 
+    const handleShowDetailProductSideBar = () => {
+        setIsOpen(true);
+        setType('detail');
+        setDetailProduct(details)
+    };
+
     return (
         <div className={isShowGrid ? '' : containerItem}>
             <div className={classNames(boxImg, { [largImg]: !isShowGrid })}>
@@ -102,7 +108,7 @@ const ProductItem = ({ src, prevSrc, name, price, details, isHomepage = true }) 
                     <div className={boxIcon}>
                         <img src={reload2Icon} alt="" />
                     </div>
-                    <div className={boxIcon}>
+                    <div className={boxIcon} onClick={handleShowDetailProductSideBar}>
                         <img src={eyesIcon} alt="" />
                     </div>
                 </div>
@@ -147,7 +153,10 @@ const ProductItem = ({ src, prevSrc, name, price, details, isHomepage = true }) 
                 {!isHomepage && (
                     <div className={classNames(boxBtn, { [leftBtn]: !isShowGrid })}>
                         {' '}
-                        <Button content={isLoading ? <LoadingTextCommon /> : 'ADD TO CARD'} onClick={handleAddtoCart} />{' '}
+                        <Button
+                            content={isLoading ? <LoadingTextCommon /> : 'ADD TO CARD'}
+                            onClick={handleAddtoCart}
+                        />{' '}
                     </div>
                 )}
             </div>
