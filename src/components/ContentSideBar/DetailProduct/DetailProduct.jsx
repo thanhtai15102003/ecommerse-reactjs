@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { SideBarContext } from '@/contexts/SideBarProvider';
 import styles from './styles.module.scss';
 import SliderCommon from '@components/SliderCommon/SliderCommon';
@@ -12,9 +12,14 @@ import { FaInstagramSquare } from 'react-icons/fa';
 import { FaYoutube } from 'react-icons/fa';
 import { FaRocketchat } from 'react-icons/fa';
 import { SiZalo } from 'react-icons/si';
+import classNames from 'classnames';
+import { addProductToCart } from '@/apis/CartService';
 
 const DetailProduct = () => {
-    const { detailProduct } = useContext(SideBarContext);
+    const { detailProduct, userId, setType, handleGetListProductCart, setIsLoading, setIsOpen } =
+        useContext(SideBarContext);
+    const [chosseSize, setChoseSize] = useState('');
+    const [quantity, setQuantity] = useState(1);
     console.log(detailProduct);
     const {
         container,
@@ -30,8 +35,10 @@ const DetailProduct = () => {
         or,
         boxOther,
         boxFooter,
-        shareIcons
+        shareIcons,
+        isActive
     } = styles;
+
     const showOptions = [
         { label: '1', value: '1' },
         { label: '2', value: '2' },
@@ -42,6 +49,38 @@ const DetailProduct = () => {
         { label: '7', value: '7' }
     ];
 
+    const hanldeGetSize = (value) => {
+        console.log(value);
+        setChoseSize(value);
+    };
+    const handleClearSize = () => {
+        setChoseSize('');
+    };
+    const handleGetQuantity = (value) => {
+        setQuantity(value);
+    };
+    const handkeAddToCart = () => {
+        const data = {
+            userId,
+            productId: detailProduct._id,
+            quantity,
+            size: chosseSize,
+            isMultiple: true
+        };
+        setIsOpen(false)
+        setIsLoading(true);
+        addProductToCart(data)
+            .then((res) => {
+                setIsOpen(true)
+                setType('cart');
+                handleGetListProductCart(userId, 'cart');
+                setIsLoading(false);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
+
     return (
         <div className={container}>
             <SliderCommon data={detailProduct.images} />
@@ -49,16 +88,36 @@ const DetailProduct = () => {
             <div className={title}>{detailProduct.name}</div>
             <div className={price}>${detailProduct.price}</div>
             <div className={des}>{detailProduct.description}</div>
-            <div className={label}>Size</div>
+            <div className={label}>Size {chosseSize}</div>
             <div className={boxSize}>
                 {detailProduct.size.map((item, index) => (
-                    <div className={size} key={index}>
+                    <div
+                        className={classNames(size, {
+                            [isActive]: item.name === chosseSize
+                        })}
+                        key={index}
+                        onClick={() => hanldeGetSize(item.name)}
+                    >
                         {item.name}
                     </div>
                 ))}
             </div>
+            {chosseSize && (
+                <div
+                    onClick={handleClearSize}
+                    style={{ fontSize: '12px', marginTop: '3px', cursor: 'pointer' }}
+                >
+                    {' '}
+                    clear{' '}
+                </div>
+            )}
             <div className={boxAddToCart}>
-                <SelectBox options={showOptions} type="show" />
+                <SelectBox
+                    options={showOptions}
+                    type="show"
+                    defaultValue={quantity}
+                    getValue={handleGetQuantity}
+                />
 
                 <div>
                     <Button
@@ -68,6 +127,7 @@ const DetailProduct = () => {
                                 <BsCart3 /> ADD TO CART
                             </div>
                         }
+                        onClick={handkeAddToCart}
                     />
                 </div>
             </div>
