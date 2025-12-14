@@ -12,6 +12,7 @@ import { SideBarContext } from '@/contexts/SideBarProvider';
 import { ToastContext } from '@/contexts/ToastProvider';
 import { addProductToCart } from '@/apis/CartService';
 import LoadingTextCommon from '../LoadingTextCommon/LoadingTextCommon';
+import { useNavigate } from 'react-router-dom';
 
 const ProductItem = ({ src, prevSrc, name, price, details, isHomepage = true }) => {
     const [sizeChoose, setSizeChoose] = useState('');
@@ -21,6 +22,7 @@ const ProductItem = ({ src, prevSrc, name, price, details, isHomepage = true }) 
     const { setIsOpen, setType, handleGetListProductCart, setDetailProduct } = useContext(SideBarContext);
     const { toast } = useContext(ToastContext);
     const [isLoading, setIsLoading] = useState(false);
+    const navigate = useNavigate();
 
     const {
         boxImg,
@@ -92,8 +94,15 @@ const ProductItem = ({ src, prevSrc, name, price, details, isHomepage = true }) 
         setDetailProduct(details)
     };
 
+    const handleNavigateToDetail = () => {
+        console.log(details._id)
+
+        const path = `/product/${details._id}`;
+        navigate(path);
+    }
+
     return (
-        <div className={isShowGrid ? '' : containerItem}>
+        <div className={isShowGrid ? '' : containerItem} style={{ cursor: 'pointer' }} onClick={handleNavigateToDetail}>
             <div className={classNames(boxImg, { [largImg]: !isShowGrid })}>
                 <img src={src} alt="" />
                 <img src={prevSrc} alt="" className={showImageWhenHover} />
